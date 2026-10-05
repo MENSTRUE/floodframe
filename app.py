@@ -3,7 +3,7 @@ from pathlib import Path
 import streamlit as st
 from PIL import Image
 
-from src.predict import predict
+from src.predict import load_model, predict_image
 
 
 PROJECT_ROOT = (
@@ -14,9 +14,8 @@ PROJECT_ROOT = (
 
 MODEL_PATH = (
     PROJECT_ROOT
-    / "runs"
-    / "floodframe"
-    / "best_model.pth"
+    / "models"
+    / "floodframe_efficientnet_b0.pth"
 )
 
 
@@ -49,6 +48,42 @@ Hasil tetap perlu diverifikasi oleh operator.
 )
 
 
+@st.cache_resource
+def get_model():
+
+    return load_model(
+        MODEL_PATH
+    )
+
+
+if not MODEL_PATH.exists():
+
+    st.error(
+        "Model belum tersedia.\n\n"
+        "Pastikan file berikut ada:\n\n"
+        "`models/floodframe_efficientnet_b0.pth`"
+    )
+
+    st.stop()
+
+
+try:
+
+    model_data = get_model()
+
+except Exception as error:
+
+    st.error(
+        "Model gagal dimuat."
+    )
+
+    st.exception(
+        error
+    )
+
+    st.stop()
+
+
 uploaded_file = st.file_uploader(
     "Upload frame CCTV / gambar jalan",
     type=[
@@ -71,24 +106,6 @@ if uploaded_file is not None:
         use_container_width=True,
     )
 
-    if not MODEL_PATH.exists():
-
-        st.error(
-            "Model belum tersedia. "
-            "Download hasil training Kaggle "
-            "dan letakkan pada "
-            "runs/floodframe/best_model.pth"
-        )
-
-        st.stop()
-
-    temp_path = (
-        PROJECT_ROOT
-        / "temp_prediction.jpg"
-    )
-
-    image.save(temp_path)
-
     with st.spinner(
         "Menganalisis frame..."
     ):
@@ -98,9 +115,9 @@ if uploaded_file is not None:
             confidence,
             probabilities,
             classes,
-        ) = predict(
-            temp_path,
-            MODEL_PATH,
+        ) = predict_image(
+            image=image,
+            model_data=model_data,
         )
 
     st.divider()
@@ -143,7 +160,7 @@ if uploaded_file is not None:
     ):
 
         st.write(
-            f"**{name}**"
+            f"**{name.upper()}**"
         )
 
         st.progress(
@@ -155,11 +172,7 @@ if uploaded_file is not None:
         )
 
     st.warning(
-        "Confidence menunjukkan keyakinan model "
-        "terhadap klasifikasi, bukan tingkat "
-        "kedalaman atau severity banjir."
-    )
-
-    temp_path.unlink(
-        missing_ok=True
+        "Confidence menunjukkan tingkat keyakinan "
+        "model terhadap klasifikasi, bukan tingkat "
+        "keparahan atau kedalaman banjir."
     )
