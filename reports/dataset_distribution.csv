@@ -1,0 +1,7 @@
+split,class,images
+train,flood,4200
+train,normal,4200
+val,flood,900
+val,normal,900
+test,flood,900
+test,normal,900

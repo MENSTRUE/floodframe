@@ -1,0 +1,19 @@
+{
+  "project": "FloodFrame",
+  "task": "binary_image_classification",
+  "classes": [
+    "flood",
+    "normal"
+  ],
+  "flood_source": "/kaggle/input/datasets/hhrclemson/flooding-image-dataset",
+  "normal_source": "/kaggle/input/datasets/solesensei/solesensei_bdd100k",
+  "flood_images_found": 9296,
+  "normal_images_found": 136000,
+  "limitations": [
+    "Flood and normal images come from different source datasets.",
+    "Dataset-source bias may inflate evaluation metrics.",
+    "Real CCTV stream performance is not validated yet.",
+    "Flood severity and water depth are not modeled.",
+    "Temporal persistence is not modeled."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "project": "FloodFrame",
+  "model": "EfficientNet-B0",
+  "task": "NORMAL vs FLOOD image classification",
+  "metrics": {
+    "test_loss": 0.0034085847934087117,
+    "accuracy": 0.9988888888888889,
+    "macro_f1": 0.9988888875171451,
+    "flood_precision": 1.0,
+    "flood_recall": 0.9977777777777778,
+    "flood_f1": 0.9988876529477196,
+    "best_val_f1": 0.9988888875171451,
+    "best_epoch": 8
+  },
+  "classes": [
+    "flood",
+    "normal"
+  ],
+  "limitations": [
+    "Flood and normal images come from different source datasets.",
+    "Dataset-source bias may inflate evaluation metrics.",
+    "Real CCTV stream performance is not validated yet.",
+    "Flood severity and water depth are not modeled.",
+    "Temporal persistence is not modeled."
+  ]
+}
