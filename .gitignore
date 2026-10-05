@@ -218,3 +218,64 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ============================================================
+# FloodFrame project-specific ignores
+# ============================================================
+
+# IDE / editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local datasets
+data/train/
+data/val/
+data/test/
+data/raw/
+data/processed/
+datasets/
+
+# Kaggle credentials
+kaggle.json
+
+# Model weights / exported models
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.engine
+
+# Training outputs
+runs/
+outputs/
+checkpoints/
+
+# Local logs
+logs/
+
+# Temporary files
+tmp/
+temp/
+
+# Local app temp files
+temp_prediction.jpg
+
+# FloodFrame generated artifacts that should stay local
+artifacts/raw/
+artifacts/tmp/
+
+# Keep important documentation/config files
+!README.md
+!AGENTS.md
+!requirements.txt
+!data/README.md
+!models/README.md
+
+# Keep demo assets in repository
+!assets/
+!assets/**
